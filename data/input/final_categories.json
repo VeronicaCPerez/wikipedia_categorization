@@ -1,0 +1,217 @@
+[
+  {
+  "_comment": "This is a note for developers",
+  "Info": "The source for this are the wikipedia categories",
+  "source": "https://en.wikipedia.org/wiki/Wikipedia:Contents/Categories",
+  "enabled": true
+},
+ {
+    "field_name": "Mathematics and logic",
+    "field_id": 1,
+    "subfields": [
+        {
+            "subfield_name": "Formal sciences", 
+            "subfield_id": 11
+        },
+        {
+            "subfield_name": "Mathematics", 
+            "subfield_id": 12,
+            "subsubfields": [
+                "Mathematics education",
+                "Equations",
+                "Heuristics", 
+                "Measurement", 
+                "Numbers", 
+                "Proofs", 
+                "Theorems"]
+        },
+        {
+            "subfield_name": "Fields of mathematics", 
+            "subfield_id": 13,
+            "subsubfields": [
+                "Arithmetic", 
+                "Algebra", 
+                "Geometry", 
+                "Trigonometry", 
+                "Mathematical", 
+                "analysis", 
+                "Calculus"
+            ]
+        },
+        {
+            "subfield_name": "Logic", 
+            "subfield_id": 14,
+            "subsubfields": [
+                "Deductive reasoning", 
+                "Inductive reasoning", 
+                "History of logic", 
+                "Fallacies", 
+                "Metalogic", 
+                "Philosophy of logic"
+            ]
+        },
+        {
+            "subfield_name": "Applied mathematics", 
+            "subfield_id": 15,
+            "subsubfields": [
+                "Computational science", 
+                "Operations research", 
+                "Theoretical physics"
+            ]
+        },
+        {
+            "subfield_name": "Statistics", 
+            "subfield_id": 16,
+            "subsubfields": [
+                "Analysis of variance", 
+                "Bayesian statistics", 
+                "Categorical data",
+                "Covariance and correlation",
+                "Data analysis",
+                "Decision theory",
+                "Design of experiments",
+                "Logic and statistics",
+                "Multivariate statistics",
+                "Nonparametric statistics",
+                "Parametric statistics",
+                "Regression analysis",
+                "Sampling",
+                "Statistical theory",
+                "Stochastic processes",
+                "Summary statistics",
+                "Survival analysis",
+                "Time series"
+            ]
+        }
+    ]
+},
+{
+    "field_name": "Natural and physical sciences",
+    "field_id": 2,
+    "subfields": [
+      {
+        "subfield_name": "Biology",
+        "subfield_id": 21,
+        "subsubfields": [
+          "Botany",
+          "Ecology",
+          "Health sciences",
+          "Medicine",
+          "Neuroscience",
+          "Zoology"
+        ]
+      },
+      {
+        "subfield_name": "Earth sciences",
+        "subfield_id": 22,
+        "subsubfields": [
+          "Atmospheric sciences",
+          "Geography",
+          "Geology",
+          "Geophysics",
+          "Oceanography"
+        ]
+      },
+      {
+        "subfield_name": "Nature",
+        "subfield_id": 23,
+        "subsubfields": [
+          "Animals",
+          "Environment",
+          "Humans",
+          "Life",
+          "Natural resources",
+          "Plants",
+          "Pollution"
+        ]
+      },
+      {
+        "subfield_name": "Physical sciences",
+        "subfield_id": 24,
+        "subsubfields": [
+          "Astronomy",
+          "Chemistry",
+          "Climate",
+          "Physics",
+          "Space",
+          "Universe"
+        ]
+      },
+      {
+        "subfield_name": "Scientific method",
+        "subfield_id": 25,
+        "subsubfields": [
+          "Scientists"
+        ]
+      }
+    ]
+  },
+  {
+    "field_name": "Technology and applied sciences",
+    "field_id": 3,
+    "subfields": [
+      {
+        "subfield_name": "General Technology",
+        "subfield_id": 31,
+        "subsubfields": [
+          "Agriculture", "Agronomy", "Architecture", "Automation", "Biotechnology", 
+          "Cartography", "Chemical engineering", "Communication", "Construction", 
+          "Control theory", "Design", "Digital divide", "Earthquake engineering", 
+          "Energy", "Ergonomics", "Firefighting", "Fire prevention", "Forensic science", 
+          "Forestry", "Industry", "Information science", "Internet", "Machines", 
+          "Management", "Manufacturing", "Marketing", "Medicine", "Medical technology", 
+          "Metalworking", "Microtechnology", "Military science", "Mining", 
+          "Nanotechnology", "Nuclear technology", "Optics", "Plumbing", "Robotics", 
+          "Sound technology", "Technology forecasting", "Tools"
+        ]
+      },
+      {
+        "subfield_name": "Computing",
+        "subfield_id": 32,
+        "subsubfields": [
+          "Application software", "Artificial intelligence", "Classes of computers", 
+          "Companies", "Computer architecture", "Computer model", "Computer engineering", 
+          "Computer science", "Computer security", "Computing and society", "Data", 
+          "Embedded systems", "Free software", "Human–computer interaction", 
+          "Information systems", "Information technology", "Internet", "Mobile web", 
+          "Languages", "Multimedia", "Networks (Industrial)", "Operating systems", 
+          "Platforms", "Product lifecycle management", "Programming", 
+          "Real-time computing", "Software", "Software engineering"
+        ]
+      },
+      {
+        "subfield_name": "Electronics",
+        "subfield_id": 33,
+        "subsubfields": [
+          "Avionics", "Circuits", "Companies", "Connectors", "Consumer electronics", 
+          "Digital electronics", "Digital media", "Electrical components", 
+          "Electronic design", "Electronics manufacturing", "Embedded systems", 
+          "Integrated circuits", "Microwave technology", "Molecular electronics", 
+          "Water technology", "Optoelectronics", "Quantum electronics", 
+          "Radio-frequency identification RFID", "Radio electronics", 
+          "Semiconductors", "Signal cables", "Surveillance", "Telecommunications"
+        ]
+      },
+      {
+        "subfield_name": "Engineering",
+        "subfield_id": 34,
+        "subsubfields": [
+          "Aerospace engineering", "Biological engineering", "Industrial engineering", 
+          "Chemical engineering", "Civil engineering", "Electrical engineering", 
+          "Environmental engineering", "Materials science", "Mechanical engineering", 
+          "Nuclear technology", "Software engineering", "Structural engineering", 
+          "Systems engineering"
+        ]
+      },
+      {
+        "subfield_name": "Transport",
+        "subfield_id": 35,
+        "subsubfields": [
+          "By country", "Aviation", "Cars", "Cycling", "Land transport", 
+          "Public transport", "Rail transport", "Road transport", "Shipping", 
+          "Spaceflight", "Vehicles", "Water transport"
+        ]
+      }
+    ]
+  }
+]
