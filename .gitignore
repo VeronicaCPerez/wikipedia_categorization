@@ -12,3 +12,6 @@ wheels/
 # apple
 .DS_Store
  
+# wiki input
+
+data/input/enwiki-latest-categorylinks.sql
