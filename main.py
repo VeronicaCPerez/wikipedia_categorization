@@ -3,6 +3,9 @@ import csv
 import sqlite3
 import argparse
 import threading
+import subprocess
+import time
+import os
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from tqdm import tqdm
@@ -80,11 +83,35 @@ def save_result(conn: sqlite3.Connection, page_id: int, page_title: str, subfiel
     conn.commit()
 
 
+def start_mariadb():
+    mysqld_path = os.getenv("MYSQLD_PATH")
+    if not mysqld_path:
+        print("MYSQLD_PATH not set in .env, skipping DB start.")
+        return
+    print(f"Starting MariaDB from {mysqld_path}...")
+    subprocess.Popen([mysqld_path], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    # wait until the server is ready
+    import mysql.connector
+    for _ in range(30):
+        try:
+            conn = mysql.connector.connect(host="localhost", user="root", password=os.getenv("DB_PASSWORD", ""), database="wikipedia")
+            conn.close()
+            print("MariaDB is ready.")
+            return
+        except Exception:
+            time.sleep(2)
+    raise RuntimeError("MariaDB did not start in time.")
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('csv_path', help='Path to CSV file with page_id column')
     parser.add_argument('--overwrite', action='store_true', help='Delete existing results and start fresh')
+    parser.add_argument('--start-db', action='store_true', help='Start MariaDB server before running (Windows server only)')
     args = parser.parse_args()
+
+    if args.start_db:
+        start_mariadb()
 
     # handle overwrite
     if args.overwrite and DB_PATH.exists():
