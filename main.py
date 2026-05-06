@@ -186,7 +186,7 @@ def main():
         ]
 
         input_stem = Path(args.csv_path).stem
-        json_output_path = main_dir / "data/output" / f"{input_stem}.json"
+        json_output_path = main_dir / "data/user_outputs" / f"{input_stem}.json"
         with open(json_output_path, "w") as f:
             json.dump(json_results, f, indent=2)
         print(f"JSON saved to {json_output_path}")
