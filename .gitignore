@@ -21,3 +21,6 @@ data/input/enwiki-latest-categorylinks.sql
 
 # claude 
 .claude*
+
+#user outputs
+data/user_outputs
