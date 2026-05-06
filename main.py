@@ -150,17 +150,49 @@ def main():
         fields = {subfield_lookup[s] for s in subfields if s in subfield_lookup} or {"Other"}
         return page_id, page_title, subfields, fields, depth
 
-    with ThreadPoolExecutor(max_workers=4) as executor:
-        futures = {executor.submit(process_page, pid): pid for pid in to_process}
-        for i, future in enumerate(tqdm(as_completed(futures), total=len(to_process), desc="Processing pages")):
-            page_id, page_title, subfields, fields, depth = future.result()
-            with write_lock:
-                save_result(conn, page_id, page_title, subfields, fields, depth)
-            if i % 100 == 0:
-                tqdm.write(f"[{i}] page_id={page_id} | title={page_title} | fields={fields} | depth={depth}")
+    if to_process:
+        with ThreadPoolExecutor(max_workers=4) as executor:
+            futures = {executor.submit(process_page, pid): pid for pid in to_process}
+            for i, future in enumerate(tqdm(as_completed(futures), total=len(to_process), desc="Processing pages")):
+                page_id, page_title, subfields, fields, depth = future.result()
+                with write_lock:
+                    save_result(conn, page_id, page_title, subfields, fields, depth)
+                if i % 100 == 0:
+                    tqdm.write(f"[{i}] page_id={page_id} | title={page_title} | fields={fields} | depth={depth}")
+    else:
+        print("All pages already in DB — skipping processing.")
+
+    # check if everything is now in the db
+    remaining = [pid for pid in page_ids if not is_processed(conn, pid)]
+
+    if remaining:
+        print(f"\n{len(remaining)} pages still unprocessed — JSON will be written on the next run when all are done.")
+    else:
+        print("All pages processed. Building JSON from DB...")
+        placeholders = ",".join("?" * len(page_ids))
+        rows = conn.execute(
+            f"SELECT page_id, page_title, subfields, fields FROM results WHERE page_id IN ({placeholders})",
+            page_ids
+        ).fetchall()
+
+        json_results = [
+            {
+                "page_id": row[0],
+                "page_title": row[1],
+                "subfields": json.loads(row[2]),
+                "fields": json.loads(row[3])
+            }
+            for row in rows
+        ]
+
+        input_stem = Path(args.csv_path).stem
+        json_output_path = main_dir / "data/output" / f"{input_stem}.json"
+        with open(json_output_path, "w") as f:
+            json.dump(json_results, f, indent=2)
+        print(f"JSON saved to {json_output_path}")
 
     conn.close()
-    print(f"\nDone. Results saved to {DB_PATH}")
+    print(f"Results DB at {DB_PATH}")
 
 
 if __name__ == "__main__":
