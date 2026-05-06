@@ -8,12 +8,18 @@ We start from the wikipedia [Category Tree](https://en.wikipedia.org/wiki/Wikipe
 
 We define *Fields*: `Mathematics and logic`, 
 
+I dropped Nature, and from General Technology i DROPPED marketing, design, health sciences, "Information science". Computing and society, "Surveillance", Formal sciences, "Firefighting", "Digital divide",  "Communication" Scientific method
+
 two options 
 
 1. Take the wikipedia categories and find the "closest path" to a one of our targets
 2. Count the number of times each page reaches one of the targets and keep the one that it hits the most
 
 The goal is to assign everything to the fields and subfields in "final_categories". We also keep track of the sub_subfileds. We can try to find the top-5
+
+Breadth-first search (BFS) start at tree root and explore all nodes at the present depth prior to moving on to the nodes at the next depth level. Once in layer n+1 we find a "target" category, then that's our goal
+
+actually Iterative deepening depth-first search
 
 # Code
 

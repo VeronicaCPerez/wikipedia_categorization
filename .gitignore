@@ -15,3 +15,6 @@ wheels/
 # wiki input
 
 data/input/enwiki-latest-categorylinks.sql
+
+# environment
+.env
