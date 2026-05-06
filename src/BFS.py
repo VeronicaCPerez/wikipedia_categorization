@@ -17,7 +17,7 @@ def BFS(page_id: int, target_cats) -> tuple[set, int]:
     visited = set()
     UNIQUE_TOP = False
 
-    while counter <= 6 and not UNIQUE_TOP:
+    while counter <= 5 and not UNIQUE_TOP:
         if counter == 1:
             new_categories = sql_parser.get_categories_for_page(page_id)
         else:
