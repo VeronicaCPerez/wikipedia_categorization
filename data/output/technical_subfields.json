@@ -1,0 +1,319 @@
+[
+  {
+    "sector": "Mathematics and logic",
+    "subfield": "Mathematics",
+    "subsubfields": [
+      "Algebra",
+      "Geometry",
+      "Calculus",
+      "Arithmetic",
+      "Trigonometry",
+      "Mathematical analysis",
+      "Number theory",
+      "Combinatorics",
+      "Topology",
+      "Mathematical logic"
+    ]
+  },
+  {
+    "sector": "Mathematics and logic",
+    "subfield": "Applied mathematics",
+    "subsubfields": [
+      "Computational science",
+      "Operations research",
+      "Numerical analysis",
+      "Mathematical optimization",
+      "Dynamical systems",
+      "Chaos theory"
+    ]
+  },
+  {
+    "sector": "Mathematics and logic",
+    "subfield": "Statistics",
+    "subsubfields": [
+      "Bayesian statistics",
+      "Regression analysis",
+      "Statistical theory",
+      "Probability theory",
+      "Data analysis",
+      "Stochastic processes",
+      "Multivariate statistics",
+      "Time series",
+      "Design of experiments",
+      "Sampling"
+    ]
+  },
+  {
+    "sector": "Mathematics and logic",
+    "subfield": "Logic",
+    "subsubfields": [
+      "Deductive reasoning",
+      "Inductive reasoning",
+      "Metalogic",
+      "Set theory",
+      "Model theory",
+      "Proof theory"
+    ]
+  },
+  {
+    "sector": "Natural and physical sciences",
+    "subfield": "Biology",
+    "subsubfields": [
+      "Botany",
+      "Zoology",
+      "Ecology",
+      "Genetics",
+      "Microbiology",
+      "Evolutionary biology",
+      "Cell biology",
+      "Molecular biology",
+      "Marine biology",
+      "Neuroscience",
+      "Biotechnology"
+    ]
+  },
+  {
+    "sector": "Natural and physical sciences",
+    "subfield": "Chemistry",
+    "subsubfields": [
+      "Organic chemistry",
+      "Inorganic chemistry",
+      "Biochemistry",
+      "Analytical chemistry",
+      "Physical chemistry",
+      "Polymer chemistry",
+      "Medicinal chemistry",
+      "Electrochemistry",
+      "Photochemistry"
+    ]
+  },
+  {
+    "sector": "Natural and physical sciences",
+    "subfield": "Physics",
+    "subsubfields": [
+      "Quantum mechanics",
+      "Classical mechanics",
+      "Thermodynamics",
+      "Electromagnetism",
+      "Nuclear physics",
+      "Particle physics",
+      "Condensed matter physics",
+      "Fluid mechanics",
+      "Optics"
+    ]
+  },
+  {
+    "sector": "Natural and physical sciences",
+    "subfield": "Earth sciences",
+    "subsubfields": [
+      "Geology",
+      "Oceanography",
+      "Atmospheric sciences",
+      "Geophysics",
+      "Meteorology",
+      "Hydrology",
+      "Seismology",
+      "Volcanology",
+      "Glaciology"
+    ]
+  },
+  {
+    "sector": "Natural and physical sciences",
+    "subfield": "Astronomy",
+    "subsubfields": [
+      "Astrophysics",
+      "Cosmology",
+      "Planetary science",
+      "Observational astronomy"
+    ]
+  },
+  {
+    "sector": "Health and fitness",
+    "subfield": "Medicine",
+    "subsubfields": [
+      "Medicine",
+      "Pharmacology",
+      "Surgery",
+      "Pathology",
+      "Oncology",
+      "Cardiology",
+      "Neurology",
+      "Dermatology",
+      "Immunology",
+      "Radiology",
+      "Psychiatry",
+      "Pediatrics",
+      "Epidemiology",
+      "Endocrinology",
+      "Gastroenterology",
+      "Orthopedics"
+    ]
+  },
+  {
+    "sector": "Health and fitness",
+    "subfield": "Medical technology",
+    "subsubfields": [
+      "Medical technology",
+      "Medical imaging",
+      "Prosthetics",
+      "Biomedical engineering",
+      "Medical devices",
+      "Telemedicine"
+    ]
+  },
+  {
+    "sector": "Technology and applied sciences",
+    "subfield": "Computing",
+    "subsubfields": [
+      "Application software",
+      "Artificial intelligence",
+      "Classes of Computers",
+      "Computer Architecture",
+      "Computer model",
+      "Computer engineering",
+      "Computer science",
+      "Computer security",
+      "Data",
+      "Embedded Systems",
+      "Free Software",
+      "Human-computer interaction",
+      "Information systems",
+      "Information technology",
+      "Internet",
+      "Mobile Web",
+      "Programming languages",
+      "Operating systems",
+      "Programming",
+      "Software engineering",
+      "Databases",
+      "Computer networks",
+      "Distributed computing",
+      "Machine learning",
+      "Computer graphics",
+      "Information science"
+    ]
+  },
+  {
+    "sector": "Technology and applied sciences",
+    "subfield": "Electronics",
+    "subsubfields": [
+      "Telecommunications",
+      "Semiconductors",
+      "Consumer electronics",
+      "Digital electronics",
+      "Integrated circuits",
+      "Signal processing",
+      "Radio electronics",
+      "Optoelectronics",
+      "Microwave technology",
+      "Electronic design",
+      "Microtechnology",
+      "Sound technology"
+    ]
+  },
+  {
+    "sector": "Technology and applied sciences",
+    "subfield": "Engineering",
+    "subsubfields": [
+      "Aerospace engineering",
+      "Chemical engineering",
+      "Civil engineering",
+      "Electrical engineering",
+      "Mechanical engineering",
+      "Materials science",
+      "Structural engineering",
+      "Systems engineering",
+      "Industrial engineering",
+      "Environmental engineering",
+      "Earthquake engineering",
+      "Ergonomics",
+      "Machines",
+      "Technology forecasting"
+    ]
+  },
+  {
+    "sector": "Technology and applied sciences",
+    "subfield": "Transport",
+    "subsubfields": [
+      "Automotive engineering",
+      "Rail transport",
+      "Maritime transport",
+      "Road transport",
+      "Land transport",
+      "Public transport"
+    ]
+  },
+  {
+    "sector": "Technology and applied sciences",
+    "subfield": "Energy technology",
+    "subsubfields": [
+      "Energy",
+      "Renewable energy",
+      "Nuclear technology",
+      "Fossil fuels",
+      "Electrical power",
+      "Energy storage",
+      "Solar energy",
+      "Wind power"
+    ]
+  },
+  {
+    "sector": "Technology and applied sciences",
+    "subfield": "Robotics and automation",
+    "subsubfields": [
+      "Robotics",
+      "Automation",
+      "Control theory",
+      "Mechatronics",
+      "Industrial robots"
+    ]
+  },
+  {
+    "sector": "Technology and applied sciences",
+    "subfield": "Nanotechnology",
+    "subsubfields": [
+      "Nanotechnology",
+      "Nanomaterials",
+      "Molecular nanotechnology",
+      "Nanomedicine",
+      "Nanoelectronics"
+    ]
+  },
+  {
+    "sector": "Human activities",
+    "subfield": "Industry and manufacturing",
+    "subsubfields": [
+      "Manufacturing",
+      "Mining",
+      "Construction",
+      "Metalworking",
+      "Textile industry",
+      "Chemical industry",
+      "Industry",
+      "Firefighting",
+      "Fire prevention",
+      "Plumbing",
+      "Tools"
+    ]
+  },
+  {
+    "sector": "Human activities",
+    "subfield": "Military and defense",
+    "subsubfields": [
+      "Military science",
+      "Weapons",
+      "Military technology",
+      "Warfare",
+      "Defense industry"
+    ]
+  },
+  {
+    "sector": "Human activities",
+    "subfield": "Aviation and spaceflight",
+    "subsubfields": [
+      "Aviation",
+      "Spaceflight",
+      "Aircraft"
+    ]
+  }
+]

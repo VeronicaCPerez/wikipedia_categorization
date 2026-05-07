@@ -47,12 +47,13 @@ def build_lookups(categories_json: list) -> tuple[dict, dict, set]:
 def init_db(conn: sqlite3.Connection):
     conn.execute("""
         CREATE TABLE IF NOT EXISTS results (
-            page_id      INTEGER PRIMARY KEY,
-            page_title   TEXT,
-            subsubfields TEXT,
-            subfields    TEXT,
-            sectors      TEXT,
-            depth        INTEGER
+            page_id           INTEGER PRIMARY KEY,
+            page_title        TEXT,
+            subsubfields      TEXT,
+            subfields         TEXT,
+            sectors           TEXT,
+            depth             INTEGER,
+            technical_subfield INTEGER
         )
     """)
     conn.commit()
@@ -64,16 +65,17 @@ def is_processed(conn: sqlite3.Connection, page_id: int) -> bool:
     ).fetchone() is not None
 
 
-def save_result(conn, page_id, page_title, subsubfields, subfields, sectors, depth):
+def save_result(conn, page_id, page_title, subsubfields, subfields, sectors, depth, technical_subfield):
     conn.execute(
         """INSERT OR REPLACE INTO results
-           (page_id, page_title, subsubfields, subfields, sectors, depth)
-           VALUES (?, ?, ?, ?, ?, ?)""",
+           (page_id, page_title, subsubfields, subfields, sectors, depth, technical_subfield)
+           VALUES (?, ?, ?, ?, ?, ?, ?)""",
         (page_id, page_title,
          json.dumps(sorted(subsubfields)),
          json.dumps(sorted(subfields)),
          json.dumps(sorted(sectors)),
-         depth)
+         depth,
+         int(technical_subfield))
     )
     conn.commit()
 
@@ -152,7 +154,8 @@ def main():
         subsubfields, depth = BFS(page_id, target_cats, sub_to_subfield, tech_subfields)
         subfields = {sub_to_subfield.get(s, "Other") for s in subsubfields}
         sectors   = {sub_to_sector.get(s,   "Other") for s in subsubfields}
-        return page_id, page_title, subsubfields, subfields, sectors, depth
+        is_tech   = any(sf in tech_subfields for sf in subfields)
+        return page_id, page_title, subsubfields, subfields, sectors, depth, is_tech
 
     if to_process:
         with ThreadPoolExecutor(max_workers=4) as executor:
@@ -160,13 +163,13 @@ def main():
             for i, future in enumerate(tqdm(as_completed(futures),
                                             total=len(to_process),
                                             desc="Processing pages")):
-                page_id, page_title, subsubfields, subfields, sectors, depth = future.result()
+                page_id, page_title, subsubfields, subfields, sectors, depth, is_tech = future.result()
                 with write_lock:
-                    save_result(conn, page_id, page_title, subsubfields, subfields, sectors, depth)
+                    save_result(conn, page_id, page_title, subsubfields, subfields, sectors, depth, is_tech)
                 if i % 100 == 0:
                     tqdm.write(
                         f"[{i}] page_id={page_id} | title={page_title} "
-                        f"| subfields={subfields} | sectors={sectors} | depth={depth}"
+                        f"| subfields={subfields} | sectors={sectors} | depth={depth} | tech={int(is_tech)}"
                     )
     else:
         print("All pages already in DB — skipping processing.")
@@ -179,18 +182,19 @@ def main():
         print("All pages processed. Building JSON output...")
         placeholders = ",".join("?" * len(page_ids))
         rows = conn.execute(
-            f"""SELECT page_id, page_title, subsubfields, subfields, sectors
+            f"""SELECT page_id, page_title, subsubfields, subfields, sectors, technical_subfield
                 FROM results WHERE page_id IN ({placeholders})""",
             page_ids
         ).fetchall()
 
         json_results = [
             {
-                "page_id":      row[0],
-                "page_title":   row[1],
-                "subsubfields": json.loads(row[2]),
-                "subfields":    json.loads(row[3]),
-                "sectors":      json.loads(row[4]),
+                "page_id":            row[0],
+                "page_title":         row[1],
+                "subsubfields":       json.loads(row[2]),
+                "subfields":          json.loads(row[3]),
+                "sectors":            json.loads(row[4]),
+                "technical_subfield": bool(row[5]),
             }
             for row in rows
         ]

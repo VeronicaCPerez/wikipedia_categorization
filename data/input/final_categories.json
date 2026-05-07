@@ -169,14 +169,12 @@
         "techs_related": 1,
         "subfield_id": 41,
         "subsubfields": [
-          "Artificial intelligence", "Computer science",
-          "Computer security", "Computer engineering",
-          "Software engineering", "Human-computer interaction",
-          "Information systems", "Programming languages",
-          "Operating systems", "Databases", "Computer networks",
-          "Embedded systems", "Distributed computing",
-          "Machine learning", "Computer graphics",
-          "Information science", "Internet"
+          "Application software", "Artificial intelligence", "Classes of Computers", 
+          "Computer Architecture", "Computer model", "Computer engineering", "Computer science",
+          "Computer security", "Data", "Embedded Systems", "Free Software", "Human-computer interaction", "Information systems", 
+          "Information technology", "Internet", "Mobile Web", "Programming languages", "Operating systems", "Programming",
+          "Software engineering", "Databases", "Computer networks", "Distributed computing",
+          "Machine learning", "Computer graphics", "Information science"
         ]
       },
       {
