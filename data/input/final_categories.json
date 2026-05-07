@@ -1,215 +1,445 @@
 [
   {
-  "_comment": "This is a note for developers",
-  "Info": "The source for this are the wikipedia categories",
-  "source": "https://en.wikipedia.org/wiki/Wikipedia:Contents/Categories",
-  "enabled": true
-},
- {
+    "_comment": "This is a note for developers",
+    "Info": "Structure follows https://en.wikipedia.org/wiki/Wikipedia:Contents/Categories. Duplicates resolved by keeping categories in their most general/primary sector.",
+    "source": "https://en.wikipedia.org/wiki/Wikipedia:Contents/Categories",
+    "enabled": true
+  },
+  {
     "field_name": "Mathematics and logic",
+    "techs_related": 1,
     "field_id": 1,
     "subfields": [
-        {
-            "subfield_name": "Formal sciences", 
-            "subfield_id": 11
-        },
-        {
-            "subfield_name": "Mathematics", 
-            "subfield_id": 12,
-            "subsubfields": [
-                "Mathematics education",
-                "Equations",
-                "Heuristics", 
-                "Measurement", 
-                "Numbers", 
-                "Proofs", 
-                "Theorems"]
-        },
-        {
-            "subfield_name": "Fields of mathematics", 
-            "subfield_id": 13,
-            "subsubfields": [
-                "Arithmetic", 
-                "Algebra", 
-                "Geometry", 
-                "Trigonometry", 
-                "Mathematical", 
-                "analysis", 
-                "Calculus"
-            ]
-        },
-        {
-            "subfield_name": "Logic", 
-            "subfield_id": 14,
-            "subsubfields": [
-                "Deductive reasoning", 
-                "Inductive reasoning", 
-                "History of logic", 
-                "Fallacies", 
-                "Metalogic", 
-                "Philosophy of logic"
-            ]
-        },
-        {
-            "subfield_name": "Applied mathematics", 
-            "subfield_id": 15,
-            "subsubfields": [
-                "Computational science", 
-                "Operations research", 
-                "Theoretical physics"
-            ]
-        },
-        {
-            "subfield_name": "Statistics", 
-            "subfield_id": 16,
-            "subsubfields": [
-                "Analysis of variance", 
-                "Bayesian statistics", 
-                "Categorical data",
-                "Covariance and correlation",
-                "Data analysis",
-                "Decision theory",
-                "Design of experiments",
-                "Logic and statistics",
-                "Multivariate statistics",
-                "Nonparametric statistics",
-                "Parametric statistics",
-                "Regression analysis",
-                "Sampling",
-                "Statistical theory",
-                "Stochastic processes",
-                "Summary statistics",
-                "Survival analysis",
-                "Time series"
-            ]
-        }
+      {
+        "subfield_name": "Mathematics",
+        "techs_related": 1,
+        "subfield_id": 11,
+        "subsubfields": [
+          "Algebra", "Geometry", "Calculus", "Arithmetic",
+          "Trigonometry", "Mathematical analysis", "Number theory",
+          "Combinatorics", "Topology", "Mathematical logic"
+        ]
+      },
+      {
+        "subfield_name": "Applied mathematics",
+        "techs_related": 1,
+        "subfield_id": 12,
+        "subsubfields": [
+          "Computational science", "Operations research",
+          "Numerical analysis", "Mathematical optimization",
+          "Dynamical systems", "Chaos theory"
+        ]
+      },
+      {
+        "subfield_name": "Statistics",
+        "techs_related": 1,
+        "subfield_id": 13,
+        "subsubfields": [
+          "Bayesian statistics", "Regression analysis",
+          "Statistical theory", "Probability theory",
+          "Data analysis", "Stochastic processes",
+          "Multivariate statistics", "Time series",
+          "Design of experiments", "Sampling"
+        ]
+      },
+      {
+        "subfield_name": "Logic",
+        "techs_related": 1,
+        "subfield_id": 14,
+        "subsubfields": [
+          "Deductive reasoning", "Inductive reasoning", "Metalogic",
+          "Set theory", "Model theory", "Proof theory"
+        ]
+      }
     ]
-},
-{
+  },
+  {
     "field_name": "Natural and physical sciences",
+    "techs_related": 1,
     "field_id": 2,
     "subfields": [
       {
         "subfield_name": "Biology",
+        "techs_related": 1,
         "subfield_id": 21,
         "subsubfields": [
-          "Botany",
-          "Ecology",
-          "Health sciences",
-          "Medicine",
-          "Neuroscience",
-          "Zoology"
+          "Botany", "Zoology", "Ecology", "Genetics",
+          "Microbiology", "Evolutionary biology", "Cell biology",
+          "Molecular biology", "Marine biology", "Neuroscience",
+          "Biotechnology"
+        ]
+      },
+      {
+        "subfield_name": "Chemistry",
+        "techs_related": 1,
+        "subfield_id": 22,
+        "subsubfields": [
+          "Organic chemistry", "Inorganic chemistry", "Biochemistry",
+          "Analytical chemistry", "Physical chemistry",
+          "Polymer chemistry", "Medicinal chemistry",
+          "Electrochemistry", "Photochemistry"
+        ]
+      },
+      {
+        "subfield_name": "Physics",
+        "techs_related": 1,
+        "subfield_id": 23,
+        "subsubfields": [
+          "Quantum mechanics", "Classical mechanics", "Thermodynamics",
+          "Electromagnetism", "Nuclear physics",
+          "Particle physics", "Condensed matter physics",
+          "Fluid mechanics", "Optics"
         ]
       },
       {
         "subfield_name": "Earth sciences",
-        "subfield_id": 22,
-        "subsubfields": [
-          "Atmospheric sciences",
-          "Geography",
-          "Geology",
-          "Geophysics",
-          "Oceanography"
-        ]
-      },
-      {
-        "subfield_name": "Nature",
-        "subfield_id": 23,
-        "subsubfields": [
-          "Animals",
-          "Environment",
-          "Humans",
-          "Life",
-          "Natural resources",
-          "Plants",
-          "Pollution"
-        ]
-      },
-      {
-        "subfield_name": "Physical sciences",
+        "techs_related": 1,
         "subfield_id": 24,
         "subsubfields": [
-          "Astronomy",
-          "Chemistry",
-          "Climate",
-          "Physics",
-          "Space",
-          "Universe"
+          "Geology", "Oceanography", "Atmospheric sciences",
+          "Geophysics", "Meteorology", "Hydrology",
+          "Seismology", "Volcanology", "Glaciology"
         ]
       },
       {
-        "subfield_name": "Scientific method",
+        "subfield_name": "Astronomy",
+        "techs_related": 1,
         "subfield_id": 25,
         "subsubfields": [
-          "Scientists"
+          "Astrophysics", "Cosmology", "Planetary science",
+          "Observational astronomy"
+        ]
+      }
+    ]
+  },
+  {
+    "field_name": "Health and fitness",
+    "techs_related": 0,
+    "field_id": 3,
+    "subfields": [
+      {
+        "subfield_name": "Medicine",
+        "techs_related": 1,
+        "subfield_id": 31,
+        "subsubfields": [
+          "Medicine", "Pharmacology", "Surgery", "Pathology",
+          "Oncology", "Cardiology", "Neurology",
+          "Dermatology", "Immunology", "Radiology",
+          "Psychiatry", "Pediatrics", "Epidemiology",
+          "Endocrinology", "Gastroenterology", "Orthopedics"
+        ]
+      },
+      {
+        "subfield_name": "Public health",
+        "techs_related": 0,
+        "subfield_id": 32,
+        "subsubfields": [
+          "Nutrition", "Hygiene", "Health policy",
+          "Global health", "Occupational safety"
+        ]
+      },
+      {
+        "subfield_name": "Psychology",
+        "techs_related": 0,
+        "subfield_id": 33,
+        "subsubfields": [
+          "Cognitive psychology", "Clinical psychology",
+          "Behavioral psychology", "Neuropsychology",
+          "Developmental psychology", "Social psychology"
+        ]
+      },
+      {
+        "subfield_name": "Medical technology",
+        "techs_related": 1,
+        "subfield_id": 34,
+        "subsubfields": [
+          "Medical technology", "Medical imaging", "Prosthetics", "Biomedical engineering",
+          "Medical devices", "Telemedicine"
         ]
       }
     ]
   },
   {
     "field_name": "Technology and applied sciences",
-    "field_id": 3,
+    "techs_related": 1,
+    "field_id": 4,
     "subfields": [
       {
-        "subfield_name": "General Technology",
-        "subfield_id": 31,
-        "subsubfields": [
-          "Agriculture", "Agronomy", "Architecture", "Automation", "Biotechnology", 
-          "Cartography", "Chemical engineering", "Communication", "Construction", 
-          "Control theory", "Design", "Digital divide", "Earthquake engineering", 
-          "Energy", "Ergonomics", "Firefighting", "Fire prevention", "Forensic science", 
-          "Forestry", "Industry", "Information science", "Internet", "Machines", 
-          "Management", "Manufacturing", "Marketing", "Medicine", "Medical technology", 
-          "Metalworking", "Microtechnology", "Military science", "Mining", 
-          "Nanotechnology", "Nuclear technology", "Optics", "Plumbing", "Robotics", 
-          "Sound technology", "Technology forecasting", "Tools"
-        ]
-      },
-      {
         "subfield_name": "Computing",
-        "subfield_id": 32,
+        "techs_related": 1,
+        "subfield_id": 41,
         "subsubfields": [
-          "Application software", "Artificial intelligence", "Classes of computers", 
-          "Companies", "Computer architecture", "Computer model", "Computer engineering", 
-          "Computer science", "Computer security", "Computing and society", "Data", 
-          "Embedded systems", "Free software", "Human–computer interaction", 
-          "Information systems", "Information technology", "Internet", "Mobile web", 
-          "Languages", "Multimedia", "Networks (Industrial)", "Operating systems", 
-          "Platforms", "Product lifecycle management", "Programming", 
-          "Real-time computing", "Software", "Software engineering"
+          "Artificial intelligence", "Computer science",
+          "Computer security", "Computer engineering",
+          "Software engineering", "Human-computer interaction",
+          "Information systems", "Programming languages",
+          "Operating systems", "Databases", "Computer networks",
+          "Embedded systems", "Distributed computing",
+          "Machine learning", "Computer graphics",
+          "Information science", "Internet"
         ]
       },
       {
         "subfield_name": "Electronics",
-        "subfield_id": 33,
+        "techs_related": 1,
+        "subfield_id": 42,
         "subsubfields": [
-          "Avionics", "Circuits", "Companies", "Connectors", "Consumer electronics", 
-          "Digital electronics", "Digital media", "Electrical components", 
-          "Electronic design", "Electronics manufacturing", "Embedded systems", 
-          "Integrated circuits", "Microwave technology", "Molecular electronics", 
-          "Water technology", "Optoelectronics", "Quantum electronics", 
-          "Radio-frequency identification RFID", "Radio electronics", 
-          "Semiconductors", "Signal cables", "Surveillance", "Telecommunications"
+          "Telecommunications", "Semiconductors",
+          "Consumer electronics", "Digital electronics",
+          "Integrated circuits", "Signal processing",
+          "Radio electronics", "Optoelectronics",
+          "Microwave technology", "Electronic design",
+          "Microtechnology", "Sound technology"
         ]
       },
       {
         "subfield_name": "Engineering",
-        "subfield_id": 34,
+        "techs_related": 1,
+        "subfield_id": 43,
         "subsubfields": [
-          "Aerospace engineering", "Biological engineering", "Industrial engineering", 
-          "Chemical engineering", "Civil engineering", "Electrical engineering", 
-          "Environmental engineering", "Materials science", "Mechanical engineering", 
-          "Nuclear technology", "Software engineering", "Structural engineering", 
-          "Systems engineering"
+          "Aerospace engineering", "Chemical engineering",
+          "Civil engineering", "Electrical engineering",
+          "Mechanical engineering", "Materials science",
+          "Structural engineering", "Systems engineering",
+          "Industrial engineering", "Environmental engineering",
+          "Earthquake engineering", "Ergonomics",
+          "Machines", "Technology forecasting"
         ]
       },
       {
         "subfield_name": "Transport",
-        "subfield_id": 35,
+        "techs_related": 1,
+        "subfield_id": 44,
         "subsubfields": [
-          "By country", "Aviation", "Cars", "Cycling", "Land transport", 
-          "Public transport", "Rail transport", "Road transport", "Shipping", 
-          "Spaceflight", "Vehicles", "Water transport"
+          "Automotive engineering", "Rail transport",
+          "Maritime transport", "Road transport",
+          "Land transport", "Public transport"
+        ]
+      },
+      {
+        "subfield_name": "Energy technology",
+        "techs_related": 1,
+        "subfield_id": 45,
+        "subsubfields": [
+          "Energy", "Renewable energy", "Nuclear technology",
+          "Fossil fuels", "Electrical power",
+          "Energy storage", "Solar energy", "Wind power"
+        ]
+      },
+      {
+        "subfield_name": "Robotics and automation",
+        "techs_related": 1,
+        "subfield_id": 46,
+        "subsubfields": [
+          "Robotics", "Automation", "Control theory",
+          "Mechatronics", "Industrial robots"
+        ]
+      },
+      {
+        "subfield_name": "Nanotechnology",
+        "techs_related": 1,
+        "subfield_id": 47,
+        "subsubfields": [
+          "Nanotechnology", "Nanomaterials", "Molecular nanotechnology",
+          "Nanomedicine", "Nanoelectronics"
+        ]
+      }
+    ]
+  },
+  {
+    "field_name": "Human activities",
+    "techs_related": 0,
+    "field_id": 5,
+    "subfields": [
+      {
+        "subfield_name": "Agriculture and food",
+        "techs_related": 0,
+        "subfield_id": 51,
+        "subsubfields": [
+          "Agriculture", "Agronomy", "Aquaculture",
+          "Forestry", "Food science", "Horticulture"
+        ]
+      },
+      {
+        "subfield_name": "Industry and manufacturing",
+        "techs_related": 1,
+        "subfield_id": 52,
+        "subsubfields": [
+          "Manufacturing", "Mining", "Construction",
+          "Metalworking", "Textile industry", "Chemical industry",
+          "Industry", "Firefighting", "Fire prevention",
+          "Plumbing", "Tools"
+        ]
+      },
+      {
+        "subfield_name": "Military and defense",
+        "techs_related": 1,
+        "subfield_id": 53,
+        "subsubfields": [
+          "Military science", "Weapons", "Military technology",
+          "Warfare", "Defense industry"
+        ]
+      },
+      {
+        "subfield_name": "Aviation and spaceflight",
+        "techs_related": 1,
+        "subfield_id": 54,
+        "subsubfields": [
+          "Aviation", "Spaceflight", "Aircraft"
+        ]
+      },
+      {
+        "subfield_name": "Commerce and trade",
+        "techs_related": 0,
+        "subfield_id": 55,
+        "subsubfields": [
+          "Trade", "Finance", "Management",
+          "Marketing", "Entrepreneurship"
+        ]
+      }
+    ]
+  },
+  {
+    "field_name": "Culture and the arts",
+    "techs_related": 0,
+    "field_id": 6,
+    "subfields": [
+      {
+        "subfield_name": "Visual arts",
+        "techs_related": 0,
+        "subfield_id": 61,
+        "subsubfields": [
+          "Painting", "Sculpture", "Photography",
+          "Architecture", "Design", "Film"
+        ]
+      },
+      {
+        "subfield_name": "Performing arts",
+        "techs_related": 0,
+        "subfield_id": 62,
+        "subsubfields": [
+          "Music", "Theatre", "Dance", "Opera"
+        ]
+      },
+      {
+        "subfield_name": "Literature and media",
+        "techs_related": 0,
+        "subfield_id": 63,
+        "subsubfields": [
+          "Literature", "Journalism", "Publishing",
+          "Broadcasting", "Internet culture", "Media studies"
+        ]
+      },
+      {
+        "subfield_name": "Games and sports",
+        "techs_related": 0,
+        "subfield_id": 64,
+        "subsubfields": [
+          "Sports", "Games", "Toys", "Recreation"
+        ]
+      }
+    ]
+  },
+  {
+    "field_name": "Society and social sciences",
+    "techs_related": 0,
+    "field_id": 7,
+    "subfields": [
+      {
+        "subfield_name": "Social sciences",
+        "techs_related": 0,
+        "subfield_id": 71,
+        "subsubfields": [
+          "Sociology", "Anthropology", "Political science",
+          "Linguistics", "Communication studies",
+          "Communication", "Digital divide"
+        ]
+      },
+      {
+        "subfield_name": "Law and government",
+        "techs_related": 0,
+        "subfield_id": 72,
+        "subsubfields": [
+          "Law", "Government", "Politics",
+          "International relations", "Public policy",
+          "Forensic science"
+        ]
+      },
+      {
+        "subfield_name": "Education",
+        "techs_related": 0,
+        "subfield_id": 73,
+        "subsubfields": [
+          "Pedagogy", "Higher education", "Educational technology",
+          "Curriculum", "Learning"
+        ]
+      },
+      {
+        "subfield_name": "Economics",
+        "techs_related": 0,
+        "subfield_id": 74,
+        "subsubfields": [
+          "Microeconomics", "Macroeconomics", "Econometrics",
+          "Development economics", "Behavioral economics"
+        ]
+      }
+    ]
+  },
+  {
+    "field_name": "Geography and places",
+    "techs_related": 0,
+    "field_id": 8,
+    "subfields": [
+      {
+        "subfield_name": "Physical geography",
+        "techs_related": 0,
+        "subfield_id": 81,
+        "subsubfields": [
+          "Geomorphology", "Climatology", "Biogeography",
+          "Cartography", "Remote sensing"
+        ]
+      },
+      {
+        "subfield_name": "Human geography",
+        "techs_related": 0,
+        "subfield_id": 82,
+        "subsubfields": [
+          "Urban geography", "Economic geography",
+          "Political geography", "Cultural geography"
+        ]
+      }
+    ]
+  },
+  {
+    "field_name": "History and events",
+    "techs_related": 0,
+    "field_id": 9,
+    "subfields": [
+      {
+        "subfield_name": "History",
+        "techs_related": 0,
+        "subfield_id": 91,
+        "subsubfields": [
+          "Ancient history", "Medieval history",
+          "Modern history", "History of science",
+          "History of technology", "Military history"
+        ]
+      }
+    ]
+  },
+  {
+    "field_name": "Philosophy and thinking",
+    "techs_related": 0,
+    "field_id": 10,
+    "subfields": [
+      {
+        "subfield_name": "Philosophy",
+        "techs_related": 0,
+        "subfield_id": 101,
+        "subsubfields": [
+          "Epistemology", "Ethics", "Metaphysics",
+          "Philosophy of science", "Philosophy of mind",
+          "Political philosophy"
         ]
       }
     ]

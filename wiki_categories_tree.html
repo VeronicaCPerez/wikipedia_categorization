@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Wikipedia Category Graph</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0f1117;
+      font-family: "Inter", "Segoe UI", sans-serif;
+      color: #e2e8f0;
+      overflow: hidden;
+    }
+
+    #header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 48px;
+      padding: 0 20px;
+      background: rgba(15,17,23,0.9);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    #header h1 { font-size: 14px; font-weight: 600; color: #f1f5f9; }
+    #header p  { font-size: 11px; color: #475569; }
+
+    #controls { margin-left: auto; display: flex; gap: 8px; }
+    button {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #94a3b8;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    button:hover { background: rgba(255,255,255,0.12); color: #e2e8f0; }
+    button.active { background: rgba(255,255,255,0.15); color: #f1f5f9; }
+
+    #canvas { position: fixed; top: 48px; left: 0; right: 0; bottom: 0; }
+    svg { width: 100%; height: 100%; }
+
+    .link { stroke-opacity: 0.4; }
+
+    .node { cursor: grab; }
+    .node:active { cursor: grabbing; }
+    .node circle { transition: r 0.1s; }
+    .node circle:hover { filter: brightness(1.3); }
+
+    .label-sector {
+      font-size: 12px;
+      font-weight: 700;
+      fill: #f1f5f9;
+      pointer-events: none;
+      text-shadow: 0 1px 4px #0f1117;
+    }
+    .label-subfield {
+      font-size: 9px;
+      font-weight: 500;
+      fill: #94a3b8;
+      pointer-events: none;
+    }
+
+    #tooltip {
+      position: fixed;
+      background: rgba(15,17,23,0.95);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 12px;
+      pointer-events: none;
+      opacity: 0;
+      z-index: 20;
+      transition: opacity 0.1s;
+    }
+    .tip-name  { font-weight: 600; color: #f1f5f9; }
+    .tip-meta  { font-size: 10px; color: #64748b; margin-top: 2px; }
+
+    #legend {
+      position: fixed;
+      bottom: 16px; right: 16px;
+      background: rgba(15,17,23,0.88);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 12px 14px;
+      z-index: 10;
+      font-size: 11px;
+    }
+    .legend-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; color: #64748b; }
+    .legend-row:last-child { margin-bottom: 0; }
+    .legend-circle { border-radius: 50%; flex-shrink: 0; border: 1.5px solid rgba(255,255,255,0.2); }
+
+    #stats {
+      position: fixed;
+      bottom: 16px; left: 16px;
+      background: rgba(15,17,23,0.88);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 11px;
+      color: #64748b;
+      line-height: 1.9;
+      z-index: 10;
+    }
+    #stats b { color: #94a3b8; }
+  </style>
+</head>
+<body>
+
+<div id="header">
+  <h1>Wikipedia Category Graph</h1>
+  <p>Wikipedia:Contents/Categories</p>
+  <div id="controls">
+    <button id="btn-leaves" class="active">Show categories</button>
+    <button id="btn-reset">Reset view</button>
+  </div>
+</div>
+
+<div id="canvas">
+  <svg id="svg">
+    <defs>
+      <marker id="arrow" viewBox="0 -3 8 6" refX="8" refY="0"
+        markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0,-3L8,0L0,3" fill="#334155" />
+      </marker>
+    </defs>
+    <g id="root-g">
+      <g id="links-g"></g>
+      <g id="nodes-g"></g>
+    </g>
+  </svg>
+</div>
+
+<div id="tooltip">
+  <div class="tip-name" id="tip-name"></div>
+  <div class="tip-meta" id="tip-meta"></div>
+</div>
+
+<div id="legend">
+  <div class="legend-row">
+    <div class="legend-circle" style="width:22px;height:22px;background:#1e293b;"></div>
+    <span>Sector (10)</span>
+  </div>
+  <div class="legend-row">
+    <div class="legend-circle" style="width:13px;height:13px;background:#334155;"></div>
+    <span>Subfield (37)</span>
+  </div>
+  <div class="legend-row">
+    <div class="legend-circle" style="width:7px;height:7px;background:#475569;border:none;"></div>
+    <span>Category (268)</span>
+  </div>
+</div>
+
+<div id="stats">
+  <div><b>10</b> sectors</div>
+  <div><b>37</b> subfields</div>
+  <div><b>268</b> categories</div>
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+const RAW = {"name":"Wikipedia","children":[{"name":"Mathematics and logic","children":[{"name":"Mathematics","children":[{"name":"Algebra"},{"name":"Geometry"},{"name":"Calculus"},{"name":"Arithmetic"},{"name":"Trigonometry"},{"name":"Mathematical analysis"},{"name":"Number theory"},{"name":"Combinatorics"},{"name":"Topology"},{"name":"Mathematical logic"}]},{"name":"Applied mathematics","children":[{"name":"Computational science"},{"name":"Operations research"},{"name":"Numerical analysis"},{"name":"Mathematical optimization"},{"name":"Dynamical systems"},{"name":"Chaos theory"}]},{"name":"Statistics","children":[{"name":"Bayesian statistics"},{"name":"Regression analysis"},{"name":"Statistical theory"},{"name":"Probability theory"},{"name":"Data analysis"},{"name":"Stochastic processes"},{"name":"Multivariate statistics"},{"name":"Time series"},{"name":"Design of experiments"},{"name":"Sampling"}]},{"name":"Logic","children":[{"name":"Deductive reasoning"},{"name":"Inductive reasoning"},{"name":"Metalogic"},{"name":"Set theory"},{"name":"Model theory"},{"name":"Proof theory"}]}]},{"name":"Natural and physical sciences","children":[{"name":"Biology","children":[{"name":"Botany"},{"name":"Zoology"},{"name":"Ecology"},{"name":"Genetics"},{"name":"Microbiology"},{"name":"Evolutionary biology"},{"name":"Cell biology"},{"name":"Molecular biology"},{"name":"Marine biology"},{"name":"Neuroscience"},{"name":"Biotechnology"}]},{"name":"Chemistry","children":[{"name":"Organic chemistry"},{"name":"Inorganic chemistry"},{"name":"Biochemistry"},{"name":"Analytical chemistry"},{"name":"Physical chemistry"},{"name":"Polymer chemistry"},{"name":"Medicinal chemistry"},{"name":"Electrochemistry"},{"name":"Photochemistry"}]},{"name":"Physics","children":[{"name":"Quantum mechanics"},{"name":"Classical mechanics"},{"name":"Thermodynamics"},{"name":"Electromagnetism"},{"name":"Nuclear physics"},{"name":"Particle physics"},{"name":"Condensed matter physics"},{"name":"Fluid mechanics"},{"name":"Optics"}]},{"name":"Earth sciences","children":[{"name":"Geology"},{"name":"Oceanography"},{"name":"Atmospheric sciences"},{"name":"Geophysics"},{"name":"Meteorology"},{"name":"Hydrology"},{"name":"Seismology"},{"name":"Volcanology"},{"name":"Glaciology"}]},{"name":"Astronomy","children":[{"name":"Astrophysics"},{"name":"Cosmology"},{"name":"Planetary science"},{"name":"Observational astronomy"}]}]},{"name":"Health and fitness","children":[{"name":"Medicine","children":[{"name":"Medicine"},{"name":"Pharmacology"},{"name":"Surgery"},{"name":"Pathology"},{"name":"Oncology"},{"name":"Cardiology"},{"name":"Neurology"},{"name":"Dermatology"},{"name":"Immunology"},{"name":"Radiology"},{"name":"Psychiatry"},{"name":"Pediatrics"},{"name":"Epidemiology"},{"name":"Endocrinology"},{"name":"Gastroenterology"},{"name":"Orthopedics"}]},{"name":"Public health","children":[{"name":"Nutrition"},{"name":"Hygiene"},{"name":"Health policy"},{"name":"Global health"},{"name":"Occupational safety"}]},{"name":"Psychology","children":[{"name":"Cognitive psychology"},{"name":"Clinical psychology"},{"name":"Behavioral psychology"},{"name":"Neuropsychology"},{"name":"Developmental psychology"},{"name":"Social psychology"}]},{"name":"Medical technology","children":[{"name":"Medical technology"},{"name":"Medical imaging"},{"name":"Prosthetics"},{"name":"Biomedical engineering"},{"name":"Medical devices"},{"name":"Telemedicine"}]}]},{"name":"Technology and applied sciences","children":[{"name":"Computing","children":[{"name":"Artificial intelligence"},{"name":"Computer science"},{"name":"Computer security"},{"name":"Computer engineering"},{"name":"Software engineering"},{"name":"Human-computer interaction"},{"name":"Information systems"},{"name":"Programming languages"},{"name":"Operating systems"},{"name":"Databases"},{"name":"Computer networks"},{"name":"Embedded systems"},{"name":"Distributed computing"},{"name":"Machine learning"},{"name":"Computer graphics"},{"name":"Information science"},{"name":"Internet"}]},{"name":"Electronics","children":[{"name":"Telecommunications"},{"name":"Semiconductors"},{"name":"Consumer electronics"},{"name":"Digital electronics"},{"name":"Integrated circuits"},{"name":"Signal processing"},{"name":"Radio electronics"},{"name":"Optoelectronics"},{"name":"Microwave technology"},{"name":"Electronic design"},{"name":"Microtechnology"},{"name":"Sound technology"}]},{"name":"Engineering","children":[{"name":"Aerospace engineering"},{"name":"Chemical engineering"},{"name":"Civil engineering"},{"name":"Electrical engineering"},{"name":"Mechanical engineering"},{"name":"Materials science"},{"name":"Structural engineering"},{"name":"Systems engineering"},{"name":"Industrial engineering"},{"name":"Environmental engineering"},{"name":"Earthquake engineering"},{"name":"Ergonomics"},{"name":"Machines"},{"name":"Technology forecasting"}]},{"name":"Transport","children":[{"name":"Automotive engineering"},{"name":"Rail transport"},{"name":"Maritime transport"},{"name":"Road transport"},{"name":"Land transport"},{"name":"Public transport"}]},{"name":"Energy technology","children":[{"name":"Energy"},{"name":"Renewable energy"},{"name":"Nuclear technology"},{"name":"Fossil fuels"},{"name":"Electrical power"},{"name":"Energy storage"},{"name":"Solar energy"},{"name":"Wind power"}]},{"name":"Robotics and automation","children":[{"name":"Robotics"},{"name":"Automation"},{"name":"Control theory"},{"name":"Mechatronics"},{"name":"Industrial robots"}]},{"name":"Nanotechnology","children":[{"name":"Nanotechnology"},{"name":"Nanomaterials"},{"name":"Molecular nanotechnology"},{"name":"Nanomedicine"},{"name":"Nanoelectronics"}]}]},{"name":"Human activities","children":[{"name":"Agriculture and food","children":[{"name":"Agriculture"},{"name":"Agronomy"},{"name":"Aquaculture"},{"name":"Forestry"},{"name":"Food science"},{"name":"Horticulture"}]},{"name":"Industry and manufacturing","children":[{"name":"Manufacturing"},{"name":"Mining"},{"name":"Construction"},{"name":"Metalworking"},{"name":"Textile industry"},{"name":"Chemical industry"},{"name":"Industry"},{"name":"Firefighting"},{"name":"Fire prevention"},{"name":"Plumbing"},{"name":"Tools"}]},{"name":"Military and defense","children":[{"name":"Military science"},{"name":"Weapons"},{"name":"Military technology"},{"name":"Warfare"},{"name":"Defense industry"}]},{"name":"Aviation and spaceflight","children":[{"name":"Aviation"},{"name":"Spaceflight"},{"name":"Aircraft"}]},{"name":"Commerce and trade","children":[{"name":"Trade"},{"name":"Finance"},{"name":"Management"},{"name":"Marketing"},{"name":"Entrepreneurship"}]}]},{"name":"Culture and the arts","children":[{"name":"Visual arts","children":[{"name":"Painting"},{"name":"Sculpture"},{"name":"Photography"},{"name":"Architecture"},{"name":"Design"},{"name":"Film"}]},{"name":"Performing arts","children":[{"name":"Music"},{"name":"Theatre"},{"name":"Dance"},{"name":"Opera"}]},{"name":"Literature and media","children":[{"name":"Literature"},{"name":"Journalism"},{"name":"Publishing"},{"name":"Broadcasting"},{"name":"Internet culture"},{"name":"Media studies"}]},{"name":"Games and sports","children":[{"name":"Sports"},{"name":"Games"},{"name":"Toys"},{"name":"Recreation"}]}]},{"name":"Society and social sciences","children":[{"name":"Social sciences","children":[{"name":"Sociology"},{"name":"Anthropology"},{"name":"Political science"},{"name":"Linguistics"},{"name":"Communication studies"},{"name":"Communication"},{"name":"Digital divide"}]},{"name":"Law and government","children":[{"name":"Law"},{"name":"Government"},{"name":"Politics"},{"name":"International relations"},{"name":"Public policy"},{"name":"Forensic science"}]},{"name":"Education","children":[{"name":"Pedagogy"},{"name":"Higher education"},{"name":"Educational technology"},{"name":"Curriculum"},{"name":"Learning"}]},{"name":"Economics","children":[{"name":"Microeconomics"},{"name":"Macroeconomics"},{"name":"Econometrics"},{"name":"Development economics"},{"name":"Behavioral economics"}]}]},{"name":"Geography and places","children":[{"name":"Physical geography","children":[{"name":"Geomorphology"},{"name":"Climatology"},{"name":"Biogeography"},{"name":"Cartography"},{"name":"Remote sensing"}]},{"name":"Human geography","children":[{"name":"Urban geography"},{"name":"Economic geography"},{"name":"Political geography"},{"name":"Cultural geography"}]}]},{"name":"History and events","children":[{"name":"History","children":[{"name":"Ancient history"},{"name":"Medieval history"},{"name":"Modern history"},{"name":"History of science"},{"name":"History of technology"},{"name":"Military history"}]}]},{"name":"Philosophy and thinking","children":[{"name":"Philosophy","children":[{"name":"Epistemology"},{"name":"Ethics"},{"name":"Metaphysics"},{"name":"Philosophy of science"},{"name":"Philosophy of mind"},{"name":"Political philosophy"}]}]}]};
+
+// ── Palette (one colour per sector) ──────────────────────────────
+const PALETTE = [
+  "#6366f1","#06b6d4","#10b981","#f59e0b",
+  "#f97316","#ec4899","#8b5cf6","#14b8a6",
+  "#84cc16","#94a3b8"
+];
+
+// ── Flatten hierarchy into nodes + links ─────────────────────────
+const nodes = [];
+const links = [];
+
+function flatten(d, parent, depth, sectorIdx) {
+  const node = {
+    id: nodes.length,
+    name: d.name,
+    depth,
+    sectorIdx: depth === 0 ? -1 : sectorIdx,
+    children: d.children || [],
+    _children: null,
+  };
+  nodes.push(node);
+  if (parent !== null) {
+    links.push({ source: parent.id, target: node.id, depth });
+  }
+  if (d.children) {
+    d.children.forEach((child, i) => {
+      const si = depth === 0 ? i : sectorIdx;
+      flatten(child, node, depth + 1, si);
+    });
+  }
+}
+flatten(RAW, null, 0, -1);
+
+// ── Colour helper ─────────────────────────────────────────────────
+function nodeColor(n) {
+  if (n.depth === 0) return "#1e293b";
+  const c = d3.color(PALETTE[n.sectorIdx % PALETTE.length]);
+  if (n.depth === 1) return c.brighter(0.2).toString();
+  if (n.depth === 2) return c.darker(0.5).toString();
+  return c.darker(1.2).toString();
+}
+
+function nodeRadius(n) {
+  if (n.depth === 0) return 22;
+  if (n.depth === 1) return 14;
+  if (n.depth === 2) return 7;
+  return 3.5;
+}
+
+// ── SVG setup ─────────────────────────────────────────────────────
+const svg   = d3.select("#svg");
+const rootG = d3.select("#root-g");
+const linksG = d3.select("#links-g");
+const nodesG = d3.select("#nodes-g");
+
+const canvas = document.getElementById("canvas");
+let W = canvas.clientWidth, H = canvas.clientHeight;
+
+// ── Zoom ──────────────────────────────────────────────────────────
+const zoom = d3.zoom()
+  .scaleExtent([0.15, 8])
+  .on("zoom", e => rootG.attr("transform", e.transform));
+svg.call(zoom);
+svg.call(zoom.translateTo, W / 2, H / 2);
+
+// ── Simulation ────────────────────────────────────────────────────
+const sim = d3.forceSimulation(nodes)
+  .force("link", d3.forceLink(links)
+    .id(d => d.id)
+    .distance(d => {
+      if (d.depth === 1) return 160;   // root → sector
+      if (d.depth === 2) return 90;    // sector → subfield
+      return 45;                       // subfield → category
+    })
+    .strength(d => {
+      if (d.depth === 1) return 0.9;
+      if (d.depth === 2) return 0.7;
+      return 0.6;
+    })
+  )
+  .force("charge", d3.forceManyBody()
+    .strength(d => {
+      if (d.depth === 0) return -2500;
+      if (d.depth === 1) return -800;
+      if (d.depth === 2) return -120;
+      return -25;
+    })
+  )
+  .force("center", d3.forceCenter(W / 2, H / 2))
+  .force("collision", d3.forceCollide().radius(d => nodeRadius(d) + 3))
+  .alphaDecay(0.02);
+
+// ── Render links ──────────────────────────────────────────────────
+const linkSel = linksG.selectAll("line")
+  .data(links)
+  .join("line")
+  .attr("class", "link")
+  .attr("stroke", d => {
+    const tgt = nodes[typeof d.target === "object" ? d.target.id : d.target];
+    const col = PALETTE[tgt.sectorIdx % PALETTE.length] || "#334155";
+    return d3.color(col).darker(1.5).toString();
+  })
+  .attr("stroke-width", d => d.depth === 1 ? 2 : d.depth === 2 ? 1.2 : 0.7)
+  .attr("stroke-opacity", d => d.depth === 1 ? 0.6 : d.depth === 2 ? 0.4 : 0.25);
+
+// ── Render nodes ──────────────────────────────────────────────────
+const tip   = document.getElementById("tooltip");
+const tipN  = document.getElementById("tip-name");
+const tipM  = document.getElementById("tip-meta");
+const LEVEL_NAMES = ["Root", "Sector", "Subfield", "Category"];
+
+const nodeSel = nodesG.selectAll("g.node")
+  .data(nodes)
+  .join("g")
+  .attr("class", "node")
+  .call(d3.drag()
+    .on("start", (e, d) => { if (!e.active) sim.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+    .on("drag",  (e, d) => { d.fx = e.x; d.fy = e.y; })
+    .on("end",   (e, d) => { if (!e.active) sim.alphaTarget(0); d.fx = null; d.fy = null; })
+  )
+  .on("mouseover", (e, d) => {
+    if (d.depth === 0) return;
+    tipN.textContent = d.name;
+    tipM.textContent = `${LEVEL_NAMES[d.depth]}${d.depth >= 2 ? " · " + (RAW.children[d.sectorIdx]?.name ?? "") : ""}`;
+    tip.style.opacity = 1;
+  })
+  .on("mousemove", e => {
+    tip.style.left = (e.clientX + 14) + "px";
+    tip.style.top  = (e.clientY - 32) + "px";
+  })
+  .on("mouseout", () => { tip.style.opacity = 0; });
+
+nodeSel.append("circle")
+  .attr("r", d => nodeRadius(d))
+  .attr("fill", d => nodeColor(d))
+  .attr("stroke", d => d.depth <= 1 ? "rgba(255,255,255,0.18)" : "none")
+  .attr("stroke-width", d => d.depth === 0 ? 2 : 1.5);
+
+// Sector labels (depth 1)
+nodeSel.filter(d => d.depth === 1)
+  .append("text")
+  .attr("class", "label-sector")
+  .attr("text-anchor", "middle")
+  .attr("dy", "0.35em")
+  .attr("font-size", "10px")
+  .attr("fill", d => PALETTE[d.sectorIdx % PALETTE.length])
+  .text(d => d.name);
+
+// Subfield labels (depth 2)
+nodeSel.filter(d => d.depth === 2)
+  .append("text")
+  .attr("class", "label-subfield")
+  .attr("text-anchor", "middle")
+  .attr("dy", "-10px")
+  .text(d => d.name);
+
+// ── Tick ──────────────────────────────────────────────────────────
+sim.on("tick", () => {
+  linkSel
+    .attr("x1", d => d.source.x)
+    .attr("y1", d => d.source.y)
+    .attr("x2", d => d.target.x)
+    .attr("y2", d => d.target.y);
+
+  nodeSel.attr("transform", d => `translate(${d.x},${d.y})`);
+});
+
+// ── Toggle leaves ─────────────────────────────────────────────────
+let leavesVisible = true;
+document.getElementById("btn-leaves").addEventListener("click", function() {
+  leavesVisible = !leavesVisible;
+  this.textContent = leavesVisible ? "Show categories" : "Show categories";
+  this.classList.toggle("active", leavesVisible);
+
+  nodesG.selectAll("g.node")
+    .filter(d => d.depth === 3)
+    .style("display", leavesVisible ? null : "none");
+  linksG.selectAll("line")
+    .filter(d => d.depth === 3)
+    .style("display", leavesVisible ? null : "none");
+
+  // Re-heat sim
+  sim.alpha(0.3).restart();
+});
+
+// ── Reset view ────────────────────────────────────────────────────
+document.getElementById("btn-reset").addEventListener("click", () => {
+  svg.transition().duration(600)
+    .call(zoom.transform, d3.zoomIdentity.translate(W / 2, H / 2));
+});
+
+// ── Resize ────────────────────────────────────────────────────────
+window.addEventListener("resize", () => {
+  W = canvas.clientWidth;
+  H = canvas.clientHeight;
+  sim.force("center", d3.forceCenter(W / 2, H / 2));
+  sim.alpha(0.2).restart();
+});
+</script>
+</body>
+</html>

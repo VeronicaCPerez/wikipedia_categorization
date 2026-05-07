@@ -3,7 +3,7 @@ import argparse
 from pathlib import Path
 
 main_dir = Path(__file__).resolve().parent.parent
-file_path = main_dir / 'data/input' / 'final_categories_filtered.json'
+file_path = main_dir / 'data/input' / 'final_categories.json'
 output_path = main_dir / 'data/output' / 'target_categories.json'
 
 with open(file_path, 'r') as f:
