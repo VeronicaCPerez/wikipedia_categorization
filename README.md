@@ -128,8 +128,8 @@ Writes `data/output/target_categories.json` — the flat list of ~270 Wikipedia 
 # Standard run (Mac/Linux)
 uv run main.py path/to/your_pages.csv
 
-# Windows server (starts MariaDB automatically)
-python main.py path/to/your_pages.csv --start-db
+# Windows server 
+python main.py path/to/your_pages.csv 
 
 # Start fresh (deletes existing results.db)
 uv run main.py path/to/your_pages.csv --overwrite
