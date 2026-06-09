@@ -79,28 +79,6 @@ def save_result(conn, page_id, page_title, subsubfields, subfields, sectors, dep
     )
     conn.commit()
 
-
-def start_mariadb():
-    mysqld_path = os.getenv("MYSQLD_PATH")
-    if not mysqld_path:
-        print("MYSQLD_PATH not set in .env, skipping DB start.")
-        return
-    print(f"Starting MariaDB from {mysqld_path}...")
-    subprocess.Popen([mysqld_path], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    import mysql.connector
-    for _ in range(30):
-        try:
-            c = mysql.connector.connect(host="localhost", user="root",
-                                        password=os.getenv("DB_PASSWORD", ""),
-                                        database="wikipedia")
-            c.close()
-            print("MariaDB is ready.")
-            return
-        except Exception:
-            time.sleep(2)
-    raise RuntimeError("MariaDB did not start in time.")
-
-
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('csv_path', help='Path to CSV file with page_id column')
@@ -108,12 +86,7 @@ def main():
                         help='Column name for page IDs in the CSV (default: page_id)')
     parser.add_argument('--overwrite', action='store_true',
                         help='Delete existing results and start fresh')
-    parser.add_argument('--start-db', action='store_true',
-                        help='Start MariaDB server before running (Windows only)')
     args = parser.parse_args()
-
-    if args.start_db:
-        start_mariadb()
 
     if args.overwrite and DB_PATH.exists():
         DB_PATH.unlink()
