@@ -101,7 +101,7 @@ def main():
     sub_to_subfield, sub_to_sector, tech_subfields = build_lookups(categories_json)
 
     # read page_ids — deduplicate while preserving order
-    with open(args.csv_path, 'r') as f:
+    with open(args.csv_path, 'r', encoding="utf-8") as f:
         reader = csv.DictReader(f)
         seen, page_ids = set(), []
         for row in reader:
