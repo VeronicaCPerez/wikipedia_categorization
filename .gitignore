@@ -24,3 +24,6 @@ data/input/enwiki-latest-categorylinks.sql
 
 #user outputs
 #/data/user_outputs
+
+* environment
+.env
