@@ -2,8 +2,7 @@ import argparse
 import pandas as pd
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from tqdm import tqdm
-from src.utils import sql_parser
+from utils import sql_parser
 
 main_dir = Path(__file__).resolve().parent.parent
 
@@ -24,7 +23,9 @@ def main():
     args = parser.parse_args()
 
     lst_titles = get_list_page_titles(args.input, title_col = args.title_col)
+    print(f"titles extracted {len(lst_titles)}")
     result_dict = sql_parser.find_page_title_ids(lst_titles)
     df = pd.DataFrame(result_dict.items(), columns=['page_title', 'page_id'])
     df.to_csv(args.output)
+    print("Saved file")
 
