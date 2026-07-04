@@ -90,3 +90,26 @@ def get_subcats_ids_for_cats(current_cats_titles: set) -> list:
     ids = [row[0] for row in cursor.fetchall()]
     cursor.close()
     return ids
+
+def find_page_title_ids(page_titles: list[str]) -> dict[str, int]:
+    """
+    Take a list of page titles and return a dict mapping title -> page_id.
+    Titles not found are simply absent from the result.
+    """
+    if not page_titles:
+        return {}
+
+    placeholders = ", ".join(["%s"] * len(page_titles))
+
+    conn = _get_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+    f"SELECT page_title, page_id FROM page WHERE page_title IN ({placeholders}) AND page_namespace = 0",
+    tuple(page_titles)
+    )
+    result = {
+    (title.decode("utf-8") if isinstance(title, bytes) else title): page_id
+    for title, page_id in cursor.fetchall()
+    }
+    cursor.close()
+    return result
