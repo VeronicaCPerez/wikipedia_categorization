@@ -26,6 +26,8 @@ def main():
     print(f"titles extracted {len(lst_titles)}")
     result_dict = sql_parser.find_page_title_ids(lst_titles)
     df = pd.DataFrame(result_dict.items(), columns=['page_title', 'page_id'])
-    df.to_csv(args.output)
+    df.to_csv(args.output, index=False)
     print("Saved file")
 
+if __name__ == "__main__":
+    main()
