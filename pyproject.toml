@@ -8,6 +8,7 @@ dependencies = [
     "dotenv>=0.9.9",
     "ipykernel>=7.2.0",
     "mysql-connector-python>=9.7.0",
+    "pandas>=3.0.3",
     "polars>=1.40.1",
     "tqdm>=4.67.3",
     "wikipedia>=1.4.0",

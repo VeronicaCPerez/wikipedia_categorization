@@ -23,8 +23,12 @@ def main():
     args = parser.parse_args()
 
     lst_titles = get_list_page_titles(args.input, title_col = args.title_col)
+
+    lst_titles = get_list_page_titles(args.input, title_col=args.title_col)
     print(f"titles extracted {len(lst_titles)}")
-    result_dict = sql_parser.find_page_title_ids(lst_titles)
+    # normalizing bc wikipedia stores with _ instead of spaces
+    result_dict = sql_parser.find_page_title_ids([t.replace(' ', '_') for t in lst_titles])
+    result_dict = {t.replace('_', ' '): pid for t, pid in result_dict.items()}
     df = pd.DataFrame(result_dict.items(), columns=['page_title', 'page_id'])
     df.to_csv(args.output, index=False)
     print("Saved file")
